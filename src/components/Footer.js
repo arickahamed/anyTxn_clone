@@ -6,18 +6,18 @@ import { IoMdMail } from "react-icons/io";
 const Footer = () => {
     return (
         <div>
-            <footer className='w-full border border-blue-600'>
+            <footer className='w-full'>
                 <div className='bg-[#002045] w-full'>
                     <div className='w-[80%] h-[85px] text-2xl m-auto flex justify-evenly items-center bg-[#002045] text-white'>
                         <h3 className='w-[40%] text-3xl font-bold'>AnyTech</h3>
                         <div className='flex w-[55%] justify-evenly items-center md:hidden lg:hidden'>
-                            <FaLinkedin />
-                            <FaPhoneAlt />
-                            <IoMdMail />
+                            <a href='https://www.linkedin.com/in/arickahamed/'> <FaLinkedin /></a>
+                            <a href="tel:+8801774887213"><FaPhoneAlt /></a>
+                            <a href="mailto:arickahamed700@gamil.com"><IoMdMail /></a>
                         </div>
-                        <div className='md:flex lg:flex w-[55%] md:text-[#00e3e5] lg:text-[#00e3e5] justify-evenly items-center hidden'>
+                        <div className='md:flex lg:flex  md:w-[85%] lg:w-[60%] md:text-[#00e3e5] lg:text-[#00e3e5] justify-evenly items-center hidden'>
                             <h3 className='font-bold border-r border-white pr-4 text-md'>Our Services</h3>
-                            <h3><a href='https://anytxn.com/en' className='text-[20px] hover:text-blue-500 transition-all delay-100 ease-in-out'>Any CaSS</a></h3>
+                            <h3 className=''><a href='https://anytxn.com/en' className='text-[20px] hover:text-blue-500 transition-all delay-100 ease-in-out'>Any CaSS</a></h3>
                             <h3><a href='https://anytxn.com/en' className='text-[20px] hover:text-blue-500 transition-all delay-100 ease-in-out'>Any BaSS</a></h3>
                             <h3><a href='https://anytxn.com/en' className='text-[20px] hover:text-blue-500 transition-all delay-100 ease-in-out'>Any PaSS</a></h3>
                         </div>

@@ -17,16 +17,12 @@ const Header = () => {
   const [updateMobileLang, setUpdateMobileLang] = useState("EN");
   const menuRef = useRef(null);
 
-  const transition = {
-    duration: 0.8,
-    delay: 0.5,
-    ease: [0, 0.71, 0.2, 1.01],
-  }
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpenLang(false);
+        setOpenMobileLang(false);
+        setOpen(false);
       }
     };
 
@@ -45,30 +41,34 @@ const Header = () => {
   }
 
   const handleLang = () => {
-    setOpenLang(!openLang);
-  }
+    setOpenLang((prev) => !prev); 
+  };
   
-  console.log(openLang, "1..2");
+  console.log("open lang: ", openLang);
 
   const handleMobileLang = () => {
     setOpenMobileLang(!openMobileLang);
   }
   
-  console.log(openMobileLang, "3..4");
+  // console.log(openMobileLang, "3..4");
 
   const handleUpdateLang = (lang) => {
     if (lang === "bengali") {
       setUpdateLang("BN");
       setOpenLang(false);
+      console.log(openLang, "bn Clicked")
     } else if (lang === "chinese") {
       setUpdateLang("TW");
       setOpenLang(false);
+      console.log(openLang, "tw Clicked")
     } else if (lang === "thai") {
       setUpdateLang("TH");
       setOpenLang(false);
+      console.log(openLang, "th Clicked")
     } else {
       setUpdateLang("EN");
       setOpenLang(false);
+      console.log(openLang, "en Clicked")
     }
   }
 
@@ -76,15 +76,19 @@ const Header = () => {
     if (lang === "bengali") {
       setUpdateMobileLang("BN");
       setOpenMobileLang(false);
+      setOpen(false);
     } else if (lang === "chinese") {
       setUpdateMobileLang("TW");
       setOpenMobileLang(false);
+      setOpen(false);
     } else if (lang === "thai") {
       setUpdateMobileLang("TH");
       setOpenMobileLang(false);
+      setOpen(false);
     } else {
       setUpdateMobileLang("EN");
       setOpenMobileLang(false);
+      setOpen(false);
     }
   }
 
@@ -118,7 +122,7 @@ const Header = () => {
               </div>
               <h3 className='py-3 px-2 hover:border-b hover:border-b-white transition delay-200 ease-in-out cursor-pointer'>Service</h3>
               <h3 className='py-3 px-2 hover:border-b hover:border-b-white transition delay-200 hover:ease-in-out cursor-pointer'>About us</h3>
-              <div ref={menuRef} onClick={handleLang} className='relative'>
+              {/* <div ref={menuRef} onClick={()=>handleLang()} className='relative'>
                 <div className={`py-1 px-2 cursor-pointer flex justify-between border rounded-2xl items-center`}>
                   <IoIosGlobe />
                   <h3 >{updateLang}</h3>
@@ -129,7 +133,7 @@ const Header = () => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }} >
-                    <div className={`absolute border rounded-md bg-white border-blue-600 mt-5 w-[250px] text-slate-500 px-3 py-2 text-[18px] ${openLang ? "block ease-in" : "hidden ease-out"} transition-all duration-200 delay-150`}>
+                    <div className={`absolute border rounded-md bg-white border-blue-600 mt-5 w-[250px] text-slate-500 px-3 py-2 text-[18px] ${openLang ? "block" : "hidden"} transition-all duration-200 delay-150`}>
                       <h3 onClick={() => handleUpdateLang("english")} className='py-2 cursor-pointer hover:text-blue-500'>EN(English)</h3>
                       <hr />
                       <h3 onClick={() => handleUpdateLang("bengali")} className='py-2 cursor-pointer hover:text-blue-500'>BN(Bengali)</h3>
@@ -140,7 +144,39 @@ const Header = () => {
                     </div>
                   </motion.div> : null}
                 </AnimatePresence>
+              </div> */}
+              <div ref={menuRef} className='relative'>
+                <div
+                  onClick={handleLang}
+                  className='py-1 px-2 cursor-pointer flex justify-between border rounded-2xl items-center'
+                >
+                  <IoIosGlobe />
+                  <h3>{updateLang}</h3>
+                  {openLang ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+                </div>
+
+                {/* Dropdown */}
+                <AnimatePresence>
+                  {openLang && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className='absolute border rounded-md bg-white border-blue-600 mt-5 w-[250px] text-slate-500 px-3 py-2 text-[18px]'
+                    >
+                      <h3 onClick={() => handleUpdateLang("english")} className='py-2 cursor-pointer hover:text-blue-500'>EN (English)</h3>
+                      <hr />
+                      <h3 onClick={() => handleUpdateLang("bengali")} className='py-2 cursor-pointer hover:text-blue-500'>BN (Bengali)</h3>
+                      <hr />
+                      <h3 onClick={() => handleUpdateLang("thai")} className='py-2 cursor-pointer hover:text-blue-500'>TH (Thai)</h3>
+                      <hr />
+                      <h3 onClick={() => handleUpdateLang("chinese")} className='cursor-pointer hover:text-blue-500'>TW (Traditional Chinese)</h3>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
+
             </div>
             <div onMouseEnter={handleHover} onMouseLeave={handleHover} className={`${open ? "bg-blue-500 mt-2" : ""} border flex justify-center items-center border-white rounded py-3 px-4 text-xl hover:bg-white hover:text-[#1a90ef] hover:shadow-lg transition delay-150 ease-in-out md:w-[30%] lg:w-[23%]`}>
               <button className='flex justify-center items-center'>
@@ -155,7 +191,7 @@ const Header = () => {
           </div>
 
           {/* mobile navbar */}
-          {/* <div
+          <div
             className={`transform transition-transform duration-500 ease-in-out
     ${open ? "flex flex-col absolute top-[5.5rem] left-0 pb-3 bg-blue-500 w-full translate-x-0"
                 : "absolute top-[5.5rem] left-0 pb-3 bg-blue-500 w-full -translate-x-full"} md:hidden lg:hidden`}
@@ -181,14 +217,14 @@ const Header = () => {
               <div className={`py-1 px-2 cursor-pointer flex justify-between border rounded-2xl items-center`}>
                 <IoIosGlobe />
                 <h3 >{updateMobileLang}</h3>
-                {openLang ? < MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+                {openMobileLang ? < MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
               </div>
               <AnimatePresence>
-                {openLang ? <motion.div initial={{ opacity: 0 }}
+                {openMobileLang ? <motion.div initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }} >
-                  <div className={`${open ? "w-[200px]" : ""} absolute border rounded-md bg-white border-blue-600 mt-5 w-[250px] text-slate-500 px-3 py-2 text-[18px] ${openMobileLang ? "block ease-in" : "hidden ease-out"} transition-all duration-200 delay-150`}>
+                  <div className={`${open ? "w-[200px]" : ""} absolute border rounded-md bg-white border-blue-600 mt-5 w-[250px] text-slate-500 px-3 py-2 text-[18px] ${openMobileLang ? "block " : "hidden "} transition-all duration-200 delay-150`}>
                     <h3 onClick={() => handleUpdateMobileLang("english")} className='py-2 cursor-pointer hover:text-blue-500 '>EN(English)</h3>
                     <hr />
                     <h3 onClick={() => handleUpdateMobileLang("bengali")} className='py-2 cursor-pointer hover:text-blue-500'>BN(Bengali)</h3>
@@ -201,7 +237,7 @@ const Header = () => {
               </AnimatePresence>
             </div>
           </div>
-          <div onMouseEnter={handleHover} onMouseLeave={handleHover} className={`${open ? "bg-blue-500 mt-2" : ""} border flex justify-center items-center border-white rounded py-3 px-4 text-xl hover:bg-white hover:text-[#1a90ef] hover:shadow-lg transition delay-150 ease-in-out md:w-[30%] lg:w-[23%]`}>
+          <div onMouseEnter={handleHover} onMouseLeave={handleHover} className={`${open ? "bg-blue-500 mt-3 w-[55%] flex justify-center items-center mx-auto" : ""} border flex justify-center items-center border-white rounded py-3 px-4 text-xl hover:bg-white hover:text-[#1a90ef] hover:shadow-lg transition delay-150 ease-in-out md:w-[30%] lg:w-[23%]`}>
             <button className='flex justify-center items-center'>
               <div className={`font-semibold`}>
                 Contact us
@@ -211,7 +247,7 @@ const Header = () => {
               </div>
             </button>
           </div>
-        </div> */}
+        </div>
 
           <div className='text-2xl md:hidden lg:hidden'>
             {open ? (<div onClick={handleNavburger} className='text-xl font-bold' >
